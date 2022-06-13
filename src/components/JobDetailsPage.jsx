@@ -36,7 +36,11 @@ let JobDetailsPage = () => {
                   <Card.Subtitle className="mb-2 text-muted">
                     {jobs.category}
                   </Card.Subtitle>
-                  <Card.Text>{jobs.description}</Card.Text>
+                  <Card.Text>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: jobs.description }}
+                    ></div>
+                  </Card.Text>
                   <Card.Text>
                     EXTERNAL LINK:
                     <a href={jobs.url} target="_blank" rel="noreferrer">

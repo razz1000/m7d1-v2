@@ -1,14 +1,30 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
 import MainPageResults from "./MainPageResults";
 
 let MainPage = () => {
   const [inputQuery, setInputQuery] = useState([]);
+  const [category, setCategory] = useState([]);
   const [jobs, setJobs] = useState([]);
 
   let handleChangeFunction = (propertyName, targetValue) => {
     setInputQuery({
       ...inputQuery,
+      [propertyName]: targetValue,
+    });
+  };
+
+  let handleChangeFunction2 = (propertyName, targetValue) => {
+    setCategory({
+      ...category,
       [propertyName]: targetValue,
     });
   };
@@ -52,6 +68,17 @@ let MainPage = () => {
                 We never store any information on you (Dont worry!).
               </Form.Text>
             </Form.Group>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title="Category"
+              onClick={(event) => {
+                handleChangeFunction2("category", event.target.value);
+              }}
+            >
+              <Dropdown.Item>Business</Dropdown.Item>
+              <Dropdown.Item>Data</Dropdown.Item>
+              <Dropdown.Item>Design</Dropdown.Item>
+            </DropdownButton>
 
             <Button variant="primary" type="submit" onClick={submitData}>
               Search
