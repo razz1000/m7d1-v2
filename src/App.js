@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
 import MainPage from "./components/MainPage";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import JobDetailsPage from "./components/JobDetailsPage";

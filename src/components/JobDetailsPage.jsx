@@ -1,9 +1,11 @@
-import react, { useEffect } from "react";
-import { useParms } from "react-router-dom";
+import react, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 let JobDetailsPage = () => {
-  const { company } = useParms();
+  const [specificJobs, setSpecificJobs] = useState([]);
+  const params = useParams();
   const companyName = params.company;
   console.log("COMpanyname: ", companyName);
 
@@ -13,7 +15,8 @@ let JobDetailsPage = () => {
     );
     if (response.ok) {
       let data = await response.json();
-      console.log(data);
+      console.log(data.data);
+      setSpecificJobs(data.data);
     }
   };
 
@@ -24,7 +27,27 @@ let JobDetailsPage = () => {
   return (
     <Container>
       <Row>
-        <Col>Hello</Col>
+        <Col md={12}>
+          {specificJobs.map((jobs) => {
+            return (
+              <Card>
+                <Card.Body>
+                  <Card.Title>{jobs.title}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    {jobs.category}
+                  </Card.Subtitle>
+                  <Card.Text>{jobs.description}</Card.Text>
+                  <Card.Text>
+                    EXTERNAL LINK:
+                    <a href={jobs.url} target="_blank" rel="noreferrer">
+                      {jobs.title}
+                    </a>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </Col>
       </Row>
     </Container>
   );
