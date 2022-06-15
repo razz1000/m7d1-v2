@@ -1,22 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { addToCartAction } from "../redux/actions";
 
-let MainPageResults = ({ data }) => {
+const mapStateToProps = (data) => ({
+  username: data,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  // here we're going to write some props capable of interacting with the redux store
+  // that means, some props capable of DISPATCHING ACTIONS!
+  // let's create a prop that will dispatch an action when invoked!
+  addToCart: (bookToAdd) => {
+    dispatch(addToCartAction(bookToAdd));
+  },
+});
+
+let MainPageResults = (props) => {
+  const [book, setBook] = useState([]);
+
   return (
     <Card>
       <Card.Body>
-        <Card.Title>{data.title}</Card.Title>
-        <Card.Text>{data.company_name}</Card.Text>
+        <Card.Title>{props.data.title}</Card.Title>
+        <Card.Text>{props.data.company_name}</Card.Text>
 
-        <Button variant="primary">
-          <Link to={`/${data.company_name}`}>READ MORE</Link>
-        </Button>
+        <Link to={`/${props.data.company_name}`}>READ MORE</Link>
+
         <Card.Text>
           EXTERNAL LINK:
-          <a href={data.url} target="_blank" rel="noreferrer">
-            {data.title}
+          <a href={props.data.url} target="_blank" rel="noreferrer">
+            {props.data.title}
           </a>
+          <Button
+            color="primary"
+            onClick={() => {
+              // Let's do something in here!
+              props.addToCart(props.data);
+            }}
+          >
+            Add as favorite
+          </Button>
         </Card.Text>
       </Card.Body>
       <Col></Col>
@@ -24,4 +49,4 @@ let MainPageResults = ({ data }) => {
   );
 };
 
-export default MainPageResults;
+export default connect(mapStateToProps, mapDispatchToProps)(MainPageResults);

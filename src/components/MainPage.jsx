@@ -87,7 +87,7 @@ let MainPage = () => {
         </Col>
         <Col>
           {jobs.map((jobsData) => (
-            <MainPageResults data={jobsData} />
+            <MainPageResults key={jobsData._id} data={jobsData} />
           ))}
         </Col>
       </Row>
