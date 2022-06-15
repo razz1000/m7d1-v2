@@ -3,6 +3,7 @@ import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { addToCartAction } from "../redux/actions";
+import { FaSplotch } from "react-icons/fa";
 
 const mapStateToProps = (data) => ({
   username: data,
@@ -40,7 +41,8 @@ let MainPageResults = (props) => {
               props.addToCart(props.data);
             }}
           >
-            Add as favorite
+            Save as favorite
+            <FaSplotch />
           </Button>
         </Card.Text>
       </Card.Body>

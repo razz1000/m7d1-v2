@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaSplotch } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { useState } from "react";
@@ -35,7 +35,7 @@ const CartIndicator = ({ cartLength, username, setUsername }) => {
     <div className="ml-auto mt-2">
       {username ? (
         <Button color="primary" onClick={() => navigate("/favorites")}>
-          <FaShoppingCart />
+          <FaSplotch />
           <span className="ml-2">{cartLength}</span>
         </Button>
       ) : (

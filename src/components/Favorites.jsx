@@ -1,14 +1,13 @@
 import Button from "react-bootstrap/Button";
-import { FaTrash } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { Col, Row } from "react-bootstrap";
-// import { useParams } from 'react-router-dom'
 import { connect } from "react-redux";
 import { removeFromCartAction } from "../redux/actions";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const mapStateToProps = (state) => ({
   favorite: state.favorite.content,
-  // cart is the array of books in the cart (state.cart.content)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -18,6 +17,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Favorites = ({ favorite, removeFromCart }) => {
+  const [jobLength, setJobLength] = useState([]);
+
+  useEffect(() => {
+    setJobLength(favorite.length);
+  }, []);
+
+  useEffect(() => {
+    setJobLength(favorite.length);
+  }, [favorite.length]);
+
   return (
     <Row>
       <Col sm={12}>
@@ -30,7 +39,7 @@ const Favorites = ({ favorite, removeFromCart }) => {
                   removeFromCart(i);
                 }}
               >
-                <FaTrash />
+                <FaTimes />
               </Button>
               <hr></hr>
               {job.title}
@@ -48,11 +57,7 @@ const Favorites = ({ favorite, removeFromCart }) => {
       </Col>
       <Row>
         <Col sm={12} className="font-weight-bold">
-          TOTAL:{" "}
-          {favorite.reduce(
-            (acc, currentValue) => acc + parseFloat(currentValue.price),
-            0
-          )}
+          Total jobs added to favorites: {jobLength}
         </Col>
       </Row>
     </Row>
