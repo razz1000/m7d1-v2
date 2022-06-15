@@ -6,16 +6,9 @@ import { connect } from "react-redux";
 import { useState } from "react";
 import { setUsernameAction } from "../redux/actions";
 
-// connect gives the specified component awareness of the redux store!
-// it can take up to 2 arguments!
-// 1) "read-mode" (mapStateToProps)
-// 2) """write-mode""" (mapDispatchToProps)
-
 const mapStateToProps = (state) => {
   return {
-    // every key of this object will become a prop for CartIndicator
     cartLength: state.favorite.content.length,
-    // CartIndicator really just needs the length of the cart...!
     username: state.user.name,
   };
 };
@@ -28,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CartIndicator = ({ cartLength, username, setUsername }) => {
   const navigate = useNavigate();
-  // very similar in functionality to Link
+
   const [inputValue, setInputValue] = useState("");
 
   return (
@@ -43,7 +36,7 @@ const CartIndicator = ({ cartLength, username, setUsername }) => {
           onSubmit={(e) => {
             e.preventDefault();
             console.log(inputValue);
-            // now inputValue should reach the redux store!
+
             setUsername(inputValue);
           }}
         >
@@ -54,12 +47,6 @@ const CartIndicator = ({ cartLength, username, setUsername }) => {
           />
         </Form>
       )}
-
-      {/* Link provides navigation like useNavigate but just in JSX */}
-      {/* creating a special anchor tag around the elements you want */}
-      {/* <Link to="/cart">
-        <h1>SARAH</h1>
-      </Link> */}
     </div>
   );
 };

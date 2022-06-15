@@ -10,11 +10,8 @@ const mapStateToProps = (data) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // here we're going to write some props capable of interacting with the redux store
-  // that means, some props capable of DISPATCHING ACTIONS!
-  // let's create a prop that will dispatch an action when invoked!
-  addToCart: (bookToAdd) => {
-    dispatch(addToCartAction(bookToAdd));
+  addToCart: (jobtoadd) => {
+    dispatch(addToCartAction(jobtoadd));
   },
 });
 
