@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addToCartAction } from "../redux/actions";
+import { addToCartAction, addToCartActionWithThunk } from "../redux/actions";
 import { FaSplotch } from "react-icons/fa";
 
-const mapStateToProps = (data) => ({
-  username: data,
+const mapStateToProps = (state) => ({
+  username: state.user.name,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addToCart: (jobtoadd) => {
-    dispatch(addToCartAction(jobtoadd));
+  addToCart: (jobToAdd) => {
+    dispatch(addToCartActionWithThunk(jobToAdd));
   },
 });
 

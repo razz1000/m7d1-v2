@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Button,
@@ -7,11 +7,27 @@ import {
   Col,
   DropdownButton,
   Dropdown,
+  Spinner,
+  Alert,
 } from "react-bootstrap";
+import { getJobsAction } from "../redux/actions";
 import MainPageResults from "./MainPageResults";
+import { connect } from "react-redux";
 
-let MainPage = () => {
-  const [inputQuery, setInputQuery] = useState([]);
+const mapStateToProps = (state) => ({
+  jobsFromRedux: state.jobs.jobs,
+  areJobsLoading: state.jobs.isLoading,
+  errorInFetching: state.jobs.isError,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getJobs: (query) => {
+    dispatch(getJobsAction(query));
+  },
+});
+
+let MainPage = ({ getJobs, jobsFromRedux, areJobsLoading }) => {
+  const [inputQuery, setInputQuery] = useState("");
   const [category, setCategory] = useState([]);
   const [jobs, setJobs] = useState([]);
 
@@ -29,17 +45,14 @@ let MainPage = () => {
     });
   };
 
-  let fetchData = async () => {
-    const response = await fetch(
-      "https://strive-jobs-api.herokuapp.com/jobs?search=" +
-        inputQuery.query +
-        "&limit=5"
-    );
-    if (response.ok) {
-      let data = await response.json();
-      console.log(data.data);
-      setJobs(data.data);
-    }
+  const query = inputQuery.query;
+  console.log("inputquery:", inputQuery.query);
+
+  let fetchData = async (inputquery) => {
+    console.log("WE ARE FETCHING NOW");
+    console.log("inputQuery2:", query);
+    getJobs(query);
+    console.log("Fetch data function:", getJobsAction);
   };
 
   let submitData = (event) => {
@@ -86,7 +99,7 @@ let MainPage = () => {
           </Form>
         </Col>
         <Col>
-          {jobs.map((jobsData) => (
+          {jobsFromRedux.map((jobsData) => (
             <MainPageResults key={jobsData._id} data={jobsData} />
           ))}
         </Col>
@@ -95,4 +108,4 @@ let MainPage = () => {
   );
 };
 
-export default MainPage;
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
