@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Col } from "react-bootstrap";
+import { Card, Button, Col, Spinner, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { addToCartAction, addToCartActionWithThunk } from "../redux/actions";
@@ -7,6 +7,8 @@ import { FaSplotch } from "react-icons/fa";
 
 const mapStateToProps = (state) => ({
   username: state.user.name,
+  areJobsLoading: state.jobs.isLoading,
+  errorInFetching: state.jobs.isError,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -16,8 +18,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 let MainPageResults = (props) => {
-  const [book, setBook] = useState([]);
-
   return (
     <Card>
       <Card.Body>
