@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, Col, Spinner, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+/* import { connect } from "react-redux"; */
 import { addToCartAction, addToCartActionWithThunk } from "../redux/actions";
 import { FaSplotch } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 
-const mapStateToProps = (state) => ({
+/* const mapStateToProps = (state) => ({
   username: state.user.name,
   areJobsLoading: state.jobs.isLoading,
   errorInFetching: state.jobs.isError,
 });
+ */
 
-const mapDispatchToProps = (dispatch) => ({
+/* const mapDispatchToProps = (dispatch) => ({
   addToCart: (jobToAdd) => {
     dispatch(addToCartActionWithThunk(jobToAdd));
   },
-});
+}); */
 
 let MainPageResults = (props) => {
+  const username = useSelector((state) => state.user.name);
+  const areJobsLoading = useSelector((state) => state.jobs.isLoading);
+  const errorInFetching = useSelector((state) => state.jobs.isError);
+
+  const dispatch = useDispatch();
+
   return (
     <Card>
       <Card.Body>
@@ -35,7 +43,7 @@ let MainPageResults = (props) => {
             color="primary"
             onClick={() => {
               // Let's do something in here!
-              props.addToCart(props.data);
+              dispatch(addToCartActionWithThunk(props.data));
             }}
           >
             Save as favorite
@@ -48,4 +56,4 @@ let MainPageResults = (props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPageResults);
+export default MainPageResults;

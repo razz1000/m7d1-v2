@@ -1,23 +1,28 @@
 import Button from "react-bootstrap/Button";
 import { FaTimes } from "react-icons/fa";
 import { Col, Row } from "react-bootstrap";
-import { connect } from "react-redux";
+/* import { connect } from "react-redux"; */
 import { removeFromCartAction } from "../redux/actions";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-const mapStateToProps = (state) => ({
+/* const mapStateToProps = (state) => ({
   favorite: state.favorite.content,
 });
+ */
 
-const mapDispatchToProps = (dispatch) => ({
+/* const mapDispatchToProps = (dispatch) => ({
   removeFromCart: (indexToRemove) => {
     dispatch(removeFromCartAction(indexToRemove));
   },
-});
+}); */
 
-const Favorites = ({ favorite, removeFromCart }) => {
+const Favorites = ({}) => {
   const [jobLength, setJobLength] = useState([]);
+
+  const favorite = useSelector((state) => state.favorite.content);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setJobLength(favorite.length);
@@ -36,7 +41,7 @@ const Favorites = ({ favorite, removeFromCart }) => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  removeFromCart(i);
+                  dispatch(removeFromCartAction(i));
                 }}
               >
                 <FaTimes />
@@ -64,4 +69,4 @@ const Favorites = ({ favorite, removeFromCart }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default Favorites;

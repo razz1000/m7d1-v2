@@ -41,6 +41,12 @@ export const addToCartActionWithThunk = (jobToAdd) => {
 export const getJobsAction = (props) => {
   return async (dispatch, getState) => {
     try {
+      if (!getState().jobs.isLoading) {
+        dispatch({
+          type: TOGGLE_SPINNER,
+        });
+      }
+
       console.log("PROPS:", props);
       let response = await fetch(
         "https://strive-jobs-api.herokuapp.com/jobs?search=" +

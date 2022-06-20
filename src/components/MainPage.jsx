@@ -12,24 +12,31 @@ import {
 } from "react-bootstrap";
 import { getJobsAction } from "../redux/actions";
 import MainPageResults from "./MainPageResults";
-import { connect } from "react-redux";
+/* import { connect } from "react-redux"; */
+import { useSelector, useDispatch } from "react-redux";
 
-const mapStateToProps = (state) => ({
+/* const mapStateToProps = (state) => ({
   jobsFromRedux: state.jobs.jobs,
   areJobsLoading: state.jobs.isLoading,
   errorInFetching: state.jobs.isError,
-});
+}); */
 
-const mapDispatchToProps = (dispatch) => ({
+/*  const mapDispatchToProps = (dispatch) => ({
   getJobs: (query) => {
     dispatch(getJobsAction(query));
   },
-});
-
-let MainPage = ({ getJobs, jobsFromRedux, areJobsLoading }) => {
+})
+ */
+let MainPage = ({}) => {
   const [inputQuery, setInputQuery] = useState("");
   const [category, setCategory] = useState([]);
   const [jobs, setJobs] = useState([]);
+
+  const jobsFromRedux = useSelector((state) => state.jobs.jobs);
+  const areJobsLoading = useSelector((state) => state.jobs.isLoading);
+  const errorInFetching = useSelector((state) => state.jobs.isloading);
+
+  const dispatch = useDispatch();
 
   let handleChangeFunction = (propertyName, targetValue) => {
     setInputQuery({
@@ -51,7 +58,7 @@ let MainPage = ({ getJobs, jobsFromRedux, areJobsLoading }) => {
   let fetchData = async (inputquery) => {
     console.log("WE ARE FETCHING NOW");
     console.log("inputQuery2:", query);
-    getJobs(query);
+    dispatch(getJobsAction(query));
     console.log("Fetch data function:", getJobsAction);
   };
 
@@ -99,13 +106,21 @@ let MainPage = ({ getJobs, jobsFromRedux, areJobsLoading }) => {
           </Form>
         </Col>
         <Col>
-          {jobsFromRedux.map((jobsData) => (
-            <MainPageResults key={jobsData._id} data={jobsData} />
-          ))}
+          {areJobsLoading ? (
+            <div className="text-center">
+              <Spinner variant="success" animation="border" />
+            </div>
+          ) : errorInFetching ? (
+            <Alert variant="danger">Error! :(</Alert>
+          ) : (
+            jobsFromRedux.map((jobsData) => (
+              <MainPageResults key={jobsData._id} data={jobsData} />
+            ))
+          )}
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;
