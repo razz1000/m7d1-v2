@@ -34,7 +34,7 @@ let MainPage = ({}) => {
 
   const jobsFromRedux = useSelector((state) => state.jobs.jobs);
   const areJobsLoading = useSelector((state) => state.jobs.isLoading);
-  const errorInFetching = useSelector((state) => state.jobs.isloading);
+  const errorInFetching = useSelector((state) => state.jobs.isError);
 
   const dispatch = useDispatch();
 
