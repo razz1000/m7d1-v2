@@ -2,7 +2,7 @@ import { GET_JOBS, TOGGLE_ERROR, TOGGLE_SPINNER } from "../actions";
 
 const initialState = {
   jobs: [],
-  isLoading: true,
+  isLoading: false,
   isError: false,
 };
 

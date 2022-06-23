@@ -12,21 +12,8 @@ import {
 } from "react-bootstrap";
 import { getJobsAction } from "../redux/actions";
 import MainPageResults from "./MainPageResults";
-/* import { connect } from "react-redux"; */
 import { useSelector, useDispatch } from "react-redux";
 
-/* const mapStateToProps = (state) => ({
-  jobsFromRedux: state.jobs.jobs,
-  areJobsLoading: state.jobs.isLoading,
-  errorInFetching: state.jobs.isError,
-}); */
-
-/*  const mapDispatchToProps = (dispatch) => ({
-  getJobs: (query) => {
-    dispatch(getJobsAction(query));
-  },
-})
- */
 let MainPage = ({}) => {
   const [inputQuery, setInputQuery] = useState("");
   const [category, setCategory] = useState([]);
